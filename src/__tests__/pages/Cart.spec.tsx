@@ -13,6 +13,17 @@ jest.mock('../../hooks/cart.tsx', () => ({
   }),
 }));
 
+jest.mock('@react-navigation/native', () => {
+  // Require the original module to not be mocked...
+  const originalModule = jest.requireActual('@react-navigation/native');
+
+  return {
+    __esModule: true, // Use it when dealing with esModules
+    ...originalModule,
+    useNavigation: jest.fn(),
+  };
+});
+
 jest.mock('../../utils/formatValue.ts', () => ({
   __esModule: true,
   default: jest.fn().mockImplementation(value => value),
